@@ -1,10 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import "codemirror/lib/codemirror.css";
 
 const Codemirror = dynamic(
   () => {
-    import("codemirror/lib/codemirror.css");
     import("codemirror/mode/xml/xml");
     return import("react-codemirror/lib/Codemirror");
   },
