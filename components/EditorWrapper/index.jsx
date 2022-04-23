@@ -5,7 +5,7 @@ import { Stack } from "@chakra-ui/react";
 
 export function EditorWrapper() {
   return (
-    <Stack className="EditorWrapper" rowGap="3rem">
+    <Stack className="EditorWrapper" rowGap="3rem" px="16">
       <EditorPanel />
       <ConsoleWrapper />
     </Stack>

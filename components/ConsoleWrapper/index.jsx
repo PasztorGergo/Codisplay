@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import React from "react";
 import { useEditor } from "../../Hooks/EditorProvider";
 import { Window } from "../Window";
@@ -6,7 +6,13 @@ import { Window } from "../Window";
 export function ConsoleWrapper() {
   const { background, fill } = useEditor();
   return (
-    <Box className="ConsoleWrapper">
+    <Container
+      className="ConsoleWrapper"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      alignSelf="center"
+    >
       <Box
         className="background"
         bgGradient={
@@ -22,6 +28,6 @@ export function ConsoleWrapper() {
       >
         <Window />
       </Box>
-    </Box>
+    </Container>
   );
 }
