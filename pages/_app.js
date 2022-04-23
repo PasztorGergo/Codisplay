@@ -1,9 +1,12 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import EditorProvider from "../Hooks/EditorProvider";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <Component {...pageProps} />
+      <EditorProvider>
+        <Component {...pageProps} />
+      </EditorProvider>
     </ChakraProvider>
   );
 }
