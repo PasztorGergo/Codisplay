@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Center,
   FormControl,
   FormLabel,
   Select,
+  Stack,
   Switch,
 } from "@chakra-ui/react";
 import { useEditor } from "../../Hooks/EditorProvider";
+import { TwitterPicker } from "react-color";
 
 export function EditorPanel() {
   const {
@@ -20,6 +22,14 @@ export function EditorPanel() {
     language,
     setLanguage,
   } = useEditor();
+  const [startColor, setStartColor] = useState(fill.substring(33, 40));
+  const [endColor, setEndColor] = useState(fill.substring(50, 57));
+  const [isOpen, setOpen] = useState(false);
+  useEffect(() => {
+    setFill(
+      `linear-gradient(to bottom right, ${startColor} -13.07%, ${endColor} 107.96%)`
+    );
+  }, [startColor, endColor]);
   return (
     <Center
       className="EditorPanel"
@@ -73,9 +83,33 @@ export function EditorPanel() {
       </FormControl>
       <FormControl display="flex" alignItems="center" flexDirection="column">
         <FormLabel htmlFor="">Fill Color</FormLabel>
-        <Button colorScheme="whatsapp" textTransform="uppercase">
+        <Button
+          colorScheme="whatsapp"
+          textTransform="uppercase"
+          onClick={() => setOpen((prev) => !prev)}
+        >
           {fill.includes("107.96%") ? "Gradient" : fill.substring(33, 40)}
         </Button>
+        {isOpen && (
+          <Stack
+            rowGap="0.5rem"
+            pos="absolute"
+            top="110%"
+            left="0"
+            zIndex="dropdown"
+          >
+            <TwitterPicker
+              triangle="hide"
+              color={startColor}
+              onChangeComplete={(color) => setStartColor(color.hex)}
+            />
+            <TwitterPicker
+              triangle="hide"
+              color={endColor}
+              onChangeComplete={(color) => setEndColor(color.hex)}
+            />
+          </Stack>
+        )}
       </FormControl>
     </Center>
   );
