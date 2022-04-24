@@ -51,10 +51,12 @@ export function EditorPanel() {
         <FormControl display="flex" alignItems="center" flexDirection="column">
           <FormLabel htmlFor="darkmodeSwitch">Dark mode</FormLabel>
           <Switch
+            defaultChecked={darkMode}
             id="darkmodeSwitch"
             colorScheme="whatsapp"
             onChange={(e) => {
               setDarkMode(e.target.checked);
+              localStorage.setItem("darkMode", e.target.checked);
             }}
           />
         </FormControl>
@@ -85,7 +87,10 @@ export function EditorPanel() {
             textTransform="uppercase"
             onClick={() => setOpen((prev) => !prev)}
           >
-            {fill.includes("107.96%") ? "Gradient" : fill.substring(16, 23)}
+            {localStorage.getItem("startColor") ==
+            localStorage.getItem("endColor")
+              ? fill.substring(33, 40)
+              : "Gradient"}
           </Button>
           {isOpen && <ColorPicker />}
         </FormControl>

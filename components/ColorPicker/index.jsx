@@ -1,20 +1,26 @@
 import { FormControl, FormLabel, Icon, Select, Stack } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { TwitterPicker } from "react-color";
-import { FaStop, FaImage, FaLayerGroup } from "react-icons/fa";
 import { useEditor } from "../../Hooks/EditorProvider";
 
 export function ColorPicker() {
   const { fill, setFill, darkMode } = useEditor();
-  const [startColor, setStartColor] = useState(fill.substring(33, 40));
-  const [endColor, setEndColor] = useState(fill.substring(50, 57));
-  const [fillMode, setFillMode] = useState("gradient");
+  const [startColor, setStartColor] = useState(
+    localStorage.getItem("startColor") || fill.substring(33, 40)
+  );
+  const [endColor, setEndColor] = useState(
+    localStorage.getItem("endColor") || fill.substring(50, 57)
+  );
+  const [fillMode, setFillMode] = useState("");
 
   useEffect(() => {
+    localStorage.setItem("fillMode", fillMode);
+    localStorage.setItem("startColor", startColor);
+    localStorage.setItem("endColor", endColor);
     setFill(
       `linear-gradient(to bottom right, ${startColor} -13.07%, ${endColor} 107.96%)`
     );
-  }, [startColor, endColor]);
+  }, [startColor, endColor, fill]);
   return (
     <Stack
       pos="absolute"
@@ -28,21 +34,20 @@ export function ColorPicker() {
       <FormControl>
         <FormLabel htmlFor="fillMode"></FormLabel>
         <Select
+          value={fillMode || localStorage.getItem("fillMode")}
           id="fillMode"
           onChange={(e) => {
             setFillMode(e.target.value);
+            console.log(fillMode);
           }}
         >
           <option style={{ color: "black" }} value="solid">
-            <Icon as={FaStop} />
             Solid
           </option>
           <option style={{ color: "black" }} value="gradient">
-            <Icon as={FaLayerGroup} />
             Gradient
           </option>
           <option style={{ color: "black" }} value="image">
-            <Icon as={FaImage} />
             Image
           </option>
         </Select>
@@ -68,7 +73,8 @@ export function ColorPicker() {
           <TwitterPicker
             triangle="hide"
             onChangeComplete={(color) => {
-              setFill(`linear-gradient(${color.hex}, ${color.hex})`);
+              setStartColor(color.hex);
+              setEndColor(color.hex);
             }}
           />
         </Stack>

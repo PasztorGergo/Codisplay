@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const EditorContext = createContext();
 
@@ -7,13 +7,24 @@ export function useEditor() {
 }
 
 export default function EditorProvider({ children }) {
+  const [isLoading, setLoading] = useState(true);
   const [title, setTitle] = useState("Title");
   const [background, setBackground] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [language, setLanguage] = useState("javascript");
-  const [fill, setFill] = useState(
-    "linear-gradient(to bottom right, #3479df -13.07%, #8922a0 107.96%)"
-  );
+  const [fill, setFill] = useState("");
+
+  useEffect(() => {
+    setFill(
+      `linear-gradient(to bottom right, ${
+        localStorage.getItem("startColor") || "#3479df"
+      } -13.07%, ${localStorage.getItem("endColor") || "#8922a0"} 107.96%)`
+    );
+    setDarkMode(localStorage.getItem("darkMode") || true);
+    console.log(darkMode);
+    setLoading(false);
+  }, []);
+
   const value = {
     title,
     setTitle,
@@ -28,6 +39,8 @@ export default function EditorProvider({ children }) {
   };
 
   return (
-    <EditorContext.Provider value={value}>{children}</EditorContext.Provider>
+    <EditorContext.Provider value={value}>
+      {!isLoading && children}
+    </EditorContext.Provider>
   );
 }
