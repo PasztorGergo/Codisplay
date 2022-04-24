@@ -11,7 +11,9 @@ export function ColorPicker() {
   const [endColor, setEndColor] = useState(
     localStorage.getItem("endColor") || fill.substring(50, 57)
   );
-  const [fillMode, setFillMode] = useState("");
+  const [fillMode, setFillMode] = useState(
+    localStorage.getItem("fillMode") || "gradient"
+  );
 
   useEffect(() => {
     localStorage.setItem("fillMode", fillMode);

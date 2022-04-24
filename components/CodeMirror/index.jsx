@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import "codemirror/lib/codemirror.css";
 import { useEditor } from "../../Hooks/EditorProvider";
 import chakraUiTheme from "@chakra-ui/theme";
@@ -14,14 +13,23 @@ const Codemirror = dynamic(
 );
 
 export function CodeMirror() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(localStorage.getItem("code") || "");
   const { darkMode } = useEditor();
   const startColor = localStorage.getItem("startColor");
   const endColor = localStorage.getItem("endColor");
+
+  useEffect(() => {
+    localStorage.setItem("code", text);
+  }, [text]);
+
   return (
     <>
       <style jsx global>
         {`
+          .CodeMirror {
+            height: auto;
+            font-size: 1.25rem;
+          }
           .CodeMirror.cm-s-default {
             background: transparent;
             color: ${darkMode ? "#fefefe" : "initial"};
@@ -39,56 +47,56 @@ export function CodeMirror() {
           }
           span.cm-number {
             color: ${endColor} !important;
-            filter: hue-rotate(40deg)
+            filter: hue-rotate(20deg)
               ${darkMode ? "brightness(1.4)" : "brightness(1)"};
           }
 
           span.cm-property,
           span.cm-attribute {
             color: ${startColor} !important;
-            filter: hue-rotate(90deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(30deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-keyword {
             color: ${startColor} !important;
-            filter: hue-rotate(180deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(20deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-string {
             color: ${endColor} !important;
-            filter: hue-rotate(90deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(50deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
 
           span.cm-variable {
             color: ${endColor} !important;
-            filter: hue-rotate(110deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(60deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-variable-2 {
             color: ${endColor} !important;
-            filter: hue-rotate(150deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(55deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-def {
             color: ${startColor} !important;
-            filter: hue-rotate(310deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(10deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-bracket {
             color: ${startColor} !important;
-            filter: hue-rotate(160deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(10deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-tag {
             color: ${startColor} !important;
-            filter: hue-rotate(180deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(20deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-link {
             color: ${startColor} !important;
-            filter: hue-rotate(200deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(1)"};
+            filter: hue-rotate(40deg)
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
           }
           span.cm-error {
             background: ${startColor} !important;
@@ -104,6 +112,9 @@ export function CodeMirror() {
           lint: true,
         }}
         onBeforeChange={(editor, data, value) => {
+          setText(value);
+        }}
+        onChange={(value) => {
           setText(value);
         }}
       />

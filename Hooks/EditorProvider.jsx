@@ -13,6 +13,7 @@ export default function EditorProvider({ children }) {
   const [darkMode, setDarkMode] = useState(true);
   const [language, setLanguage] = useState("javascript");
   const [fill, setFill] = useState("");
+  const [padding, setPadding] = useState("8");
 
   useEffect(() => {
     setFill(
@@ -36,6 +37,8 @@ export default function EditorProvider({ children }) {
     setLanguage,
     fill,
     setFill,
+    padding,
+    setPadding,
   };
 
   return (

@@ -8,10 +8,13 @@ import {
   Stack,
   Switch,
   Box,
+  useRadioGroup,
+  HStack,
 } from "@chakra-ui/react";
 import { useEditor } from "../../Hooks/EditorProvider";
 import { TwitterPicker } from "react-color";
 import { ColorPicker } from "../ColorPicker";
+import { RadioCard } from "../RadioCard";
 
 export function EditorPanel() {
   const {
@@ -23,8 +26,17 @@ export function EditorPanel() {
     setFill,
     language,
     setLanguage,
+    setPadding,
+    padding,
   } = useEditor();
+
   const [isOpen, setOpen] = useState(false);
+
+  const { getRootProps, getRadioProps, setValue } = useRadioGroup({
+    name: "padding",
+    defaultValue: padding,
+    onChange: (e) => setPadding(e),
+  });
 
   return (
     <>
@@ -59,6 +71,15 @@ export function EditorPanel() {
               localStorage.setItem("darkMode", e.target.checked);
             }}
           />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="">Padding</FormLabel>
+          <HStack>
+            <RadioCard {...getRadioProps({ value: "4" })}>16</RadioCard>
+            <RadioCard {...getRadioProps({ value: "8" })}>32</RadioCard>
+            <RadioCard {...getRadioProps({ value: "16" })}>64</RadioCard>
+            <RadioCard {...getRadioProps({ value: "32" })}>128</RadioCard>
+          </HStack>
         </FormControl>
         <FormControl display="flex" alignItems="center" flexDirection="column">
           <FormLabel htmlFor="">Language</FormLabel>

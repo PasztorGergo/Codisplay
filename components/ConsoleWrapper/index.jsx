@@ -4,7 +4,7 @@ import { useEditor } from "../../Hooks/EditorProvider";
 import { Window } from "../Window";
 
 export function ConsoleWrapper() {
-  const { background, fill } = useEditor();
+  const { background, fill, padding } = useEditor();
   return (
     <Container
       className="ConsoleWrapper"
@@ -23,8 +23,9 @@ export function ConsoleWrapper() {
         bgSize={!background && "20px 20px"}
         bgPosition={!background && "0 0,0 10px,10px -10px,-10px 0"}
         w="full"
-        px="8"
-        py="6"
+        px={padding}
+        py={padding}
+        maxH="6xl"
       >
         <Window />
       </Box>

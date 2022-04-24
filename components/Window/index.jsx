@@ -11,7 +11,7 @@ export function Window() {
       maxW="full"
       px="6"
       py="4"
-      bg={darkMode ? "#000000da" : "whiteAlpha.900"}
+      bg={darkMode ? "blackAlpha.700" : "whiteAlpha.900"}
       rounded="lg"
       transition="ease-in 200ms"
     >
