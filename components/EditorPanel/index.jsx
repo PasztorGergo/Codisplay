@@ -15,6 +15,7 @@ import { useEditor } from "../../Hooks/EditorProvider";
 import { TwitterPicker } from "react-color";
 import { ColorPicker } from "../ColorPicker";
 import { RadioCard } from "../RadioCard";
+import { ExportButton } from "../ExportButton";
 
 export function EditorPanel() {
   const {
@@ -114,6 +115,9 @@ export function EditorPanel() {
               : "Gradient"}
           </Button>
           {isOpen && <ColorPicker />}
+        </FormControl>
+        <FormControl>
+          <ExportButton />
         </FormControl>
       </Center>
       {isOpen && (

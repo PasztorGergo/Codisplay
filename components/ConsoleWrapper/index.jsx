@@ -1,10 +1,18 @@
 import { Box, Container } from "@chakra-ui/react";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useEditor } from "../../Hooks/EditorProvider";
+import { useExport } from "../../Hooks/ExportProvider";
 import { Window } from "../Window";
 
 export function ConsoleWrapper() {
+  const { setImgRef } = useExport();
   const { background, fill, padding } = useEditor();
+  const imgRef = useRef();
+
+  useEffect(() => {
+    setImgRef(imgRef);
+  }, []);
+
   return (
     <Container
       className="ConsoleWrapper"
@@ -14,6 +22,10 @@ export function ConsoleWrapper() {
       alignSelf="center"
     >
       <Box
+        ref={imgRef}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         className="background"
         bgGradient={
           background
@@ -22,7 +34,7 @@ export function ConsoleWrapper() {
         }
         bgSize={!background && "20px 20px"}
         bgPosition={!background && "0 0,0 10px,10px -10px,-10px 0"}
-        w="full"
+        w="auto"
         px={padding}
         py={padding}
         maxH="6xl"

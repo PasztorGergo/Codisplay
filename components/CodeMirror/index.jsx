@@ -27,6 +27,7 @@ export function CodeMirror() {
       <style jsx global>
         {`
           .CodeMirror {
+            min-width: max-content;
             height: auto;
             font-size: 1.25rem;
           }
@@ -81,7 +82,8 @@ export function CodeMirror() {
           span.cm-def {
             color: ${startColor} !important;
             filter: hue-rotate(10deg)
-              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"};
+              ${darkMode ? "brightness(1.4)" : "brightness(0.8)"}
+              saturation(0.75);
           }
           span.cm-bracket {
             color: ${startColor} !important;
@@ -108,7 +110,6 @@ export function CodeMirror() {
         value={text}
         options={{
           mode: "javascript",
-          lineWrapping: true,
           lint: true,
         }}
         onBeforeChange={(editor, data, value) => {
