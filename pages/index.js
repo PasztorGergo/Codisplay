@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { EditorWrapper } from "../components";
+import { EditorWrapper, Footer } from "../components";
 
 export default function Home() {
   return (
@@ -16,6 +16,7 @@ export default function Home() {
       <main>
         <EditorWrapper />
       </main>
+      <Footer />
     </div>
   );
 }
