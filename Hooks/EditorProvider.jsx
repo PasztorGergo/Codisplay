@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const EditorContext = createContext();
 
@@ -7,6 +8,7 @@ export function useEditor() {
 }
 
 export default function EditorProvider({ children }) {
+  const [text, setText] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [title, setTitle] = useState("Title");
   const [background, setBackground] = useState(true);
@@ -21,6 +23,7 @@ export default function EditorProvider({ children }) {
         localStorage.getItem("startColor") || "#3479df"
       } -13.07%, ${localStorage.getItem("endColor") || "#8922a0"} 107.96%)`
     );
+    setText(localStorage.getItem("code") || "");
     setDarkMode(localStorage.getItem("darkMode") || true);
     console.log(darkMode);
     setLoading(false);
@@ -39,6 +42,8 @@ export default function EditorProvider({ children }) {
     setFill,
     padding,
     setPadding,
+    text,
+    setText,
   };
 
   return (

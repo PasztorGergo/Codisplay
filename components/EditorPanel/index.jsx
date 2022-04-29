@@ -10,6 +10,7 @@ import {
   Box,
   useRadioGroup,
   HStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEditor } from "../../Hooks/EditorProvider";
 import { TwitterPicker } from "react-color";
@@ -31,6 +32,10 @@ export function EditorPanel() {
     padding,
   } = useEditor();
 
+  const flexShrink = useBreakpointValue({ base: "0.5", md: "1" });
+  const flexWrap = useBreakpointValue({ base: "wrap", md: "nowrap" });
+  const centerH = useBreakpointValue({ base: "full", md: "28" });
+  const formWidth = useBreakpointValue({ base: "50%", md: "100%" });
   const [isOpen, setOpen] = useState(false);
 
   const { getRootProps, getRadioProps, setValue } = useRadioGroup({
@@ -43,14 +48,23 @@ export function EditorPanel() {
     <>
       <Center
         className="EditorPanel"
-        h="28"
+        h={centerH}
         bg={darkMode ? "gray.900" : "gray.100"}
         textColor={darkMode ? "gray.100" : "gray.900"}
         rounded="xl"
         transition="all 200ms ease-in"
         transitionDelay="100ms"
+        flexWrap={flexWrap}
+        py="4"
+        rowGap=".7rem"
       >
-        <FormControl display="flex" alignItems="center" flexDirection="column">
+        <FormControl
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          flexShrink={flexShrink}
+          w={formWidth}
+        >
           <FormLabel htmlFor="backgroundSwitch">Background</FormLabel>
           <Switch
             id="backgroundSwitch"
@@ -61,7 +75,13 @@ export function EditorPanel() {
             }}
           />
         </FormControl>
-        <FormControl display="flex" alignItems="center" flexDirection="column">
+        <FormControl
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          flexShrink={flexShrink}
+          w={formWidth}
+        >
           <FormLabel htmlFor="darkmodeSwitch">Dark mode</FormLabel>
           <Switch
             defaultChecked={darkMode}
@@ -73,7 +93,12 @@ export function EditorPanel() {
             }}
           />
         </FormControl>
-        <FormControl>
+        <FormControl
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDir="column"
+        >
           <FormLabel htmlFor="">Padding</FormLabel>
           <HStack>
             <RadioCard {...getRadioProps({ value: "4" })}>16</RadioCard>
@@ -82,9 +107,15 @@ export function EditorPanel() {
             <RadioCard {...getRadioProps({ value: "32" })}>128</RadioCard>
           </HStack>
         </FormControl>
-        <FormControl display="flex" alignItems="center" flexDirection="column">
+        <FormControl
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          w={formWidth}
+        >
           <FormLabel htmlFor="">Language</FormLabel>
           <Select
+            maxW="fit-content"
             variant="outline"
             borderColor="gray.500"
             onChange={(e) => {
@@ -102,7 +133,12 @@ export function EditorPanel() {
             </option>
           </Select>
         </FormControl>
-        <FormControl display="flex" alignItems="center" flexDirection="column">
+        <FormControl
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          w={formWidth}
+        >
           <FormLabel htmlFor="">Fill Color</FormLabel>
           <Button
             colorScheme="whatsapp"
@@ -116,7 +152,13 @@ export function EditorPanel() {
           </Button>
           {isOpen && <ColorPicker />}
         </FormControl>
-        <FormControl>
+        <FormControl
+          display="flex"
+          justifyContent="center"
+          flexDir="column"
+          px="4"
+          pos="relative"
+        >
           <ExportButton />
         </FormControl>
       </Center>

@@ -1,9 +1,10 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import EditorProvider from "../Hooks/EditorProvider";
+import { theme } from "../styles/theme";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <EditorProvider>
         <Component {...pageProps} />
       </EditorProvider>

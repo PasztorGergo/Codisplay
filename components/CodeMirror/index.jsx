@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import "codemirror/lib/codemirror.css";
 import { useEditor } from "../../Hooks/EditorProvider";
 import chakraUiTheme from "@chakra-ui/theme";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const Codemirror = dynamic(
   () => {
@@ -13,10 +14,11 @@ const Codemirror = dynamic(
 );
 
 export function CodeMirror() {
-  const [text, setText] = useState(localStorage.getItem("code") || "");
-  const { darkMode } = useEditor();
-  const startColor = localStorage.getItem("startColor");
-  const endColor = localStorage.getItem("endColor");
+  const { darkMode, text, setText, fill } = useEditor();
+  const fontSize = useBreakpointValue({ base: "0.8rem", md: "1.25rem" });
+  const startColor =
+    fill.substring(33, 40) || localStorage.getItem("startColor");
+  const endColor = fill.substring(50, 57) || localStorage.getItem("endColor");
 
   useEffect(() => {
     localStorage.setItem("code", text);
@@ -29,7 +31,7 @@ export function CodeMirror() {
           .CodeMirror {
             min-width: max-content;
             height: auto;
-            font-size: 1.25rem;
+            font-size: ${fontSize};
           }
           .CodeMirror.cm-s-default {
             background: transparent;
